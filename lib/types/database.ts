@@ -43,6 +43,8 @@ export interface Topic {
   updated_at: string;
 }
 
+export type RecurrenceType = "daily" | "weekly" | "monthly";
+
 export interface Task {
   id: string;
   title: string;
@@ -52,7 +54,12 @@ export interface Task {
   assignee: string | null;
   status: TaskStatus;
   due_date: string | null;
+  recurrence: RecurrenceType | null;
+  recurrence_day: number | null;
+  recurrence_end: string | null;
+  is_todo: boolean;
   source: SourceType;
+  is_mine: boolean;
   github_issue_url: string | null;
   created_at: string;
   updated_at: string;

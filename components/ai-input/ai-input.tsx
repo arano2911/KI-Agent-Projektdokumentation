@@ -13,8 +13,15 @@ interface AiTask {
   faellig: string | null;
 }
 
+interface AiNewProject {
+  name: string;
+  beschreibung: string;
+  fachabteilung: Department[];
+}
+
 interface AiResult {
   projekt: string | null;
+  neues_projekt: AiNewProject | null;
   titel: string;
   beschreibung: string;
   typ: TopicType;
@@ -98,9 +105,27 @@ export function AiInput() {
 
     const supabase = createClient();
 
-    // Projekt-ID ermitteln, falls zugeordnet
+    // Projekt-ID ermitteln oder neues Projekt anlegen
     let projectId: string | null = null;
-    if (aiResult.projekt) {
+    if (aiResult.neues_projekt) {
+      // Neues Projekt anlegen
+      const { data: newProject, error: projectError } = await supabase
+        .from("projects")
+        .insert({
+          name: aiResult.neues_projekt.name,
+          description: aiResult.neues_projekt.beschreibung,
+          status: "Planung",
+          departments: aiResult.neues_projekt.fachabteilung,
+        } as never)
+        .select("id")
+        .single();
+
+      if (projectError) {
+        setError("Fehler beim Anlegen des Projekts: " + projectError.message);
+        return;
+      }
+      projectId = (newProject as any)?.id ?? null;
+    } else if (aiResult.projekt) {
       const { data } = await supabase
         .from("projects")
         .select("id")
@@ -146,6 +171,7 @@ export function AiInput() {
         status: "Offen" as const,
         due_date: a.faellig,
         source: "KI-Agent" as const,
+        is_mine: true,
       }));
 
       const { error: taskError } = await supabase
@@ -158,7 +184,20 @@ export function AiInput() {
       }
     }
 
-    // 3. Activity Log
+    // 3. Activity Log — Projekt (falls neu)
+    if (aiResult.neues_projekt && projectId) {
+      await supabase.from("activity_log").insert({
+        entity_type: "project",
+        entity_id: projectId,
+        action: "erstellt",
+        details: {
+          name: aiResult.neues_projekt.name,
+        },
+        source: "KI-Agent",
+      } as never);
+    }
+
+    // 4. Activity Log — Topic
     if (topicId) {
       await supabase.from("activity_log").insert({
         entity_type: "topic",
@@ -168,6 +207,7 @@ export function AiInput() {
           title: aiResult.titel,
           project: aiResult.projekt,
           tasks_count: aiResult.aufgaben.length,
+          new_project: !!aiResult.neues_projekt,
         },
         source: "KI-Agent",
       } as never);
@@ -252,12 +292,24 @@ export function AiInput() {
                 Projekt
               </div>
               <div className="text-sm font-semibold">
-                {aiResult.projekt ?? (
+                {aiResult.neues_projekt ? (
+                  <span className="flex items-center gap-1.5">
+                    <span className="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-700">NEU</span>
+                    {aiResult.neues_projekt.name}
+                  </span>
+                ) : aiResult.projekt ? (
+                  aiResult.projekt
+                ) : (
                   <span className="text-amber-600">
                     &#9888; Nicht zugeordnet
                   </span>
                 )}
               </div>
+              {aiResult.neues_projekt?.beschreibung && (
+                <div className="mt-0.5 text-[11px] text-slate-500">
+                  {aiResult.neues_projekt.beschreibung}
+                </div>
+              )}
             </div>
 
             {/* Typ */}
@@ -388,9 +440,14 @@ export function AiInput() {
               className="rounded-[10px] bg-emerald-500 px-6 py-2.5 text-[13px] font-semibold text-white transition-colors hover:bg-emerald-600"
             >
               &#10003; &Uuml;bernehmen
-              {aiResult.aufgaben.length > 0 && (
+              {(aiResult.neues_projekt || aiResult.aufgaben.length > 0) && (
                 <span className="ml-1 text-emerald-200">
-                  (+ {aiResult.aufgaben.length} Aufgabe{aiResult.aufgaben.length > 1 ? "n" : ""})
+                  ({[
+                    aiResult.neues_projekt ? "Neues Projekt" : null,
+                    aiResult.aufgaben.length > 0
+                      ? `${aiResult.aufgaben.length} Aufgabe${aiResult.aufgaben.length > 1 ? "n" : ""}`
+                      : null,
+                  ].filter(Boolean).join(" + ")})
                 </span>
               )}
             </button>

@@ -45,6 +45,7 @@ export async function POST(request: Request) {
       .from("projects")
       .select("name, description, status, departments")
       .eq("id", projectId)
+      .returns<{ name: string; description: string | null; status: string; departments: string[] }[]>()
       .single();
 
     if (!project) {

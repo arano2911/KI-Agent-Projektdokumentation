@@ -54,12 +54,31 @@ Für jede erkannte Aufgabe:
 Wenn KEINE konkreten Aufgaben erkennbar sind, setze "aufgaben" auf ein leeres Array [].
 Erfinde KEINE Aufgaben, die nicht aus der Nachricht ableitbar sind.
 
+## Regeln für neue Projekte
+
+Erkenne, ob der Nutzer ein **neues Projekt** beschreibt. Hinweise:
+- "Neues Projekt", "Wir starten ein Projekt", "Neues Vorhaben", "Projekt anlegen"
+- "Wir planen ein neues...", "Kick-off für...", "Wir bauen..."
+- Ein Projektname, der NICHT in der Projektliste oben steht
+
+Wenn ein neues Projekt erkannt wird:
+1. Setze "neues_projekt" als Objekt (nicht null) mit Name, Beschreibung und Abteilungen
+2. Setze "projekt" auf den Namen des neuen Projekts (identisch mit neues_projekt.name)
+3. Thema und Aufgaben werden dem neuen Projekt zugeordnet
+
+Wenn KEIN neues Projekt erkennbar ist, setze "neues_projekt" auf null.
+
 ## Ausgabeformat
 Antworte ausschließlich mit validem JSON. Kein Markdown, keine Erklärungen, kein Fließtext.
 
 ```json
 {
   "projekt": "Exakter Projektname oder null",
+  "neues_projekt": {
+    "name": "Projektname",
+    "beschreibung": "Kurze Projektbeschreibung in 1-2 Sätzen",
+    "fachabteilung": ["Abteilung1", "Abteilung2"]
+  },
   "titel": "Kurzer aussagekräftiger Titel",
   "beschreibung": "Fachlich verständliche Beschreibung in 2-4 Sätzen.",
   "typ": "Anforderung|Entscheidung|Diskussionspunkt|Information",
@@ -77,6 +96,8 @@ Antworte ausschließlich mit validem JSON. Kein Markdown, keine Erklärungen, ke
 }
 ```
 
+Hinweis: "neues_projekt" ist null wenn kein neues Projekt erkannt wird.
+
 ## Beispiel 1 — Mit Aufgaben
 
 Eingabe: "Für den HR-Chatbot müssen wir noch klären, ob die Gehaltstabellen als Trainingsdaten genutzt werden dürfen. Das sollten wir mit HR und dem DSB besprechen. Daniel soll bis nächste Woche einen Termin mit dem Betriebsrat machen."
@@ -85,6 +106,7 @@ Ausgabe:
 ```json
 {
   "projekt": "HR-Chatbot",
+  "neues_projekt": null,
   "titel": "Freigabe der Gehaltstabellen als Trainingsdaten",
   "beschreibung": "Bevor der HR-Chatbot Fragen zu Gehältern beantworten kann, muss geklärt werden, ob die bestehenden Gehaltstabellen als Trainingsdaten verwendet werden dürfen. Dies erfordert eine Abstimmung mit der Personalabteilung und dem Datenschutzbeauftragten, da es sich um besonders schützenswerte Daten handelt.",
   "typ": "Entscheidung",
@@ -110,6 +132,7 @@ Ausgabe:
 ```json
 {
   "projekt": "Marketing-Automatisierung",
+  "neues_projekt": null,
   "titel": "Marketing-Automatisierung in Testphase gestartet",
   "beschreibung": "Die Marketing-Automatisierung ist in die Testphase eingetreten. Die ersten Ergebnisse der Tests fallen positiv aus, was darauf hindeutet, dass die Lösung wie geplant funktioniert.",
   "typ": "Information",
@@ -117,5 +140,35 @@ Ausgabe:
   "fachabteilung": ["Marketing"],
   "meeting_agenda": false,
   "aufgaben": []
+}
+```
+
+## Beispiel 3 — Neues Projekt
+
+Eingabe: "Wir starten ein neues Projekt: Kundenfeedback-Portal. Kunden sollen online Feedback zu unseren Produkten geben können. Marketing und IT sind beteiligt. Erste Aufgabe: Max soll ein Konzept erstellen bis Ende des Monats."
+
+Ausgabe:
+```json
+{
+  "projekt": "Kundenfeedback-Portal",
+  "neues_projekt": {
+    "name": "Kundenfeedback-Portal",
+    "beschreibung": "Online-Portal, über das Kunden Feedback zu Produkten abgeben können.",
+    "fachabteilung": ["Marketing", "IT"]
+  },
+  "titel": "Kick-off Kundenfeedback-Portal",
+  "beschreibung": "Ein neues Projekt wird gestartet: Ein Online-Portal, über das Kunden strukturiertes Feedback zu den Produkten abgeben können. Marketing und IT sind gemeinsam verantwortlich für die Umsetzung.",
+  "typ": "Information",
+  "prioritaet": "Mittel",
+  "fachabteilung": ["Marketing", "IT"],
+  "meeting_agenda": false,
+  "aufgaben": [
+    {
+      "titel": "Konzept für Kundenfeedback-Portal erstellen",
+      "beschreibung": "Erstes Grobkonzept mit Funktionsumfang und technischen Anforderungen",
+      "zustaendig": "Max",
+      "faellig": null
+    }
+  ]
 }
 ```

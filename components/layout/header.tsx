@@ -5,9 +5,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 const navItems = [
-  { href: "/", label: "Dashboard" },
+  { href: "/today", label: "Heute" },
+  { href: "/chat", label: "Chat" },
+  { href: "/dashboard", label: "Dashboard" },
   { href: "/topics", label: "Themen" },
   { href: "/tasks", label: "Aufgaben" },
+  { href: "/meetings", label: "Protokolle" },
   { href: "/agenda", label: "Meeting-Agenda" },
 ];
 
@@ -42,10 +45,7 @@ export function Header() {
         <div className="flex items-center gap-1">
           <nav className="flex gap-1">
             {navItems.map((item) => {
-              const isActive =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(item.href);
+              const isActive = pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}

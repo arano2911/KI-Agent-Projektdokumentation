@@ -59,7 +59,7 @@ export function AgendaList({ items, fallbackTopics }: Props) {
     }
 
     // Sortiere items pro Gruppe nach Priorität
-    for (const group of map.values()) {
+    for (const group of Array.from(map.values())) {
       group.items.sort(
         (a, b) => (priorityOrder[a.prioritaet] ?? 9) - (priorityOrder[b.prioritaet] ?? 9)
       );
