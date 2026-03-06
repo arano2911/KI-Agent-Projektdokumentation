@@ -31,7 +31,7 @@ export default async function DashboardPage() {
     <>
       <Header />
       <main className="mx-auto max-w-[1200px] px-6 py-6">
-        {/* KI-Agent Eingabe */}
+        {/* Misty Eingabe */}
         <AiInput />
 
         {/* Projekte */}

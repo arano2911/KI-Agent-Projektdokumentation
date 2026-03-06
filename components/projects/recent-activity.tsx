@@ -32,7 +32,7 @@ export function RecentActivity({ topics }: { topics: RecentTopic[] }) {
             }`}
           >
             {topic.source === "KI-Agent"
-              ? "K"
+              ? "M"
               : topic.source === "Meeting"
                 ? "M"
                 : "\u270E"}

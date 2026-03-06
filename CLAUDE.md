@@ -1,7 +1,7 @@
-# KI-Agent Fachliche Projektdokumentation
+# Misty — Fachliche Projektdokumentation
 
 ## Projektziel
-KI-Agent, der fachliche Projektdokumentation für die Zusammenarbeit mit Fachabteilungen übernimmt. Er schließt die Lücke zwischen technischer Entwicklung (GitHub, Claude Code) und der fachlichen Kommunikation mit Business, Marketing, HR, Geschäftsführung und IT.
+Misty ist eine KI-Assistentin, die fachliche Projektdokumentation für die Zusammenarbeit mit Fachabteilungen übernimmt. Sie schließt die Lücke zwischen technischer Entwicklung (GitHub, Claude Code) und der fachlichen Kommunikation mit Business, Marketing, HR, Geschäftsführung und IT.
 
 ## Kernfunktionen
 1. **Themen + Aufgaben erfassen**: Per natürlicher Sprache Anforderungen, Entscheidungen, Diskussionspunkte und Aufgaben dokumentieren. Claude analysiert die Eingabe und erstellt strukturierte Einträge — Themen werden in `topics` gespeichert, erkannte Aufgaben zusätzlich in `tasks`.
@@ -15,7 +15,7 @@ KI-Agent, der fachliche Projektdokumentation für die Zusammenarbeit mit Fachabt
 - Next.js 14 Projekt mit App Router, Build + Dev-Server laufen
 - Supabase-Schema komplett (5 Tabellen, 2 Views, deutsche Enums, RLS offen für Prototyp)
 - Dashboard: Projektübersicht via `v_project_dashboard` View + Letzte Aktivitäten
-- KI-Agent: Freitext → Claude API → JSON-Preview → Supabase (Topics + Tasks)
+- Misty: Freitext → Claude API → JSON-Preview → Supabase (Topics + Tasks)
 - Themen-Seite: Vollständige Übersicht mit Filtern (Projekt, Status, Typ, Priorität, Suche)
 - Aufgaben-Seite: Kanban-Board (4 Spalten) + Listenansicht mit Filtern
 - Meeting-Agenda: Gruppiert nach Projekt, sortiert nach Priorität, via `v_meeting_agenda` View
@@ -48,7 +48,7 @@ KI-Agent, der fachliche Projektdokumentation für die Zusammenarbeit mit Fachabt
 │       └── ai/process/route.ts # Claude API: Thema + Aufgaben aus Freitext
 ├── components/
 │   ├── layout/header.tsx       # Navigation (Dashboard, Themen, Aufgaben, Meeting-Agenda)
-│   ├── ai-input/ai-input.tsx   # KI-Agent Eingabefeld mit Preview + Übernehmen
+│   ├── ai-input/ai-input.tsx   # Misty Eingabefeld mit Preview + Übernehmen
 │   ├── projects/
 │   │   ├── project-card.tsx    # Projektkarte für Dashboard
 │   │   └── recent-activity.tsx # Letzte Aktivitäten

@@ -9,9 +9,9 @@ const ibmPlexSans = IBM_Plex_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "KI-Agent — Fachliche Projektdokumentation",
+  title: "Misty — Fachliche Projektdokumentation",
   description:
-    "KI-Agent für fachliche Projektdokumentation: Themenerfassung, Meeting-Protokolle, GitHub-Sync.",
+    "Misty — Fachliche Projektdokumentation: Themenerfassung, Meeting-Protokolle, GitHub-Sync.",
 };
 
 export default function RootLayout({

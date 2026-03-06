@@ -27,11 +27,11 @@ export function Header() {
       <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-gradient-to-br from-indigo-500 to-violet-500 text-lg font-bold text-white">
-            K
+            M
           </div>
           <div>
             <div className="text-base font-bold leading-tight text-slate-100">
-              KI-Agent
+              Misty
             </div>
             <div className="text-[11px] font-medium text-slate-500">
               Fachliche Projektdokumentation

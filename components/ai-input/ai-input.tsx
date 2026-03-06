@@ -198,7 +198,7 @@ export function AiInput() {
           }`}
         />
         <span className="text-[13px] font-semibold uppercase tracking-wide text-slate-500">
-          KI-Agent
+          Misty
         </span>
         {showSuccess && (
           <span className="ml-auto text-[13px] font-semibold text-emerald-500 animate-in fade-in">

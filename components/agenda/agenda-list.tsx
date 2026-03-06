@@ -77,7 +77,7 @@ export function AgendaList({ items, fallbackTopics }: Props) {
           Keine Themen für die Meeting-Agenda vorgemerkt.
         </p>
         <p className="mt-1 text-[12px] text-slate-400">
-          Erfasse Themen über den KI-Agent und markiere sie für die Agenda.
+          Erfasse Themen über Misty und markiere sie für die Agenda.
         </p>
       </div>
     );

@@ -35,11 +35,11 @@ const deptBadge: Record<string, string> = {
   IT: "bg-indigo-500/10 text-indigo-600",
 };
 
-const sourceLabels: Record<string, { icon: string; style: string }> = {
-  "KI-Agent": { icon: "\u2728", style: "text-violet-600" },
-  Meeting: { icon: "\uD83D\uDCC5", style: "text-blue-600" },
-  Manuell: { icon: "\u270F\uFE0F", style: "text-slate-500" },
-  GitHub: { icon: "\uD83D\uDD17", style: "text-slate-700" },
+const sourceLabels: Record<string, { icon: string; style: string; label: string }> = {
+  "KI-Agent": { icon: "\u2728", style: "text-violet-600", label: "Misty" },
+  Meeting: { icon: "\uD83D\uDCC5", style: "text-blue-600", label: "Meeting" },
+  Manuell: { icon: "\u270F\uFE0F", style: "text-slate-500", label: "Manuell" },
+  GitHub: { icon: "\uD83D\uDD17", style: "text-slate-700", label: "GitHub" },
 };
 
 // ──── Filter-Optionen ────
@@ -264,7 +264,7 @@ export function TopicFilters({ topics, projects }: Props) {
                   className={`flex items-center gap-1 ${sourceLabels[topic.source].style}`}
                 >
                   {sourceLabels[topic.source].icon}
-                  {topic.source}
+                  {sourceLabels[topic.source].label}
                 </span>
               )}
 
@@ -292,7 +292,7 @@ export function TopicFilters({ topics, projects }: Props) {
           <div className="rounded-xl border border-dashed border-slate-300 py-16 text-center">
             <p className="text-sm text-slate-400">
               {topics.length === 0
-                ? "Noch keine Themen erfasst. Nutze den KI-Agent auf dem Dashboard."
+                ? "Noch keine Themen erfasst. Nutze Misty auf dem Dashboard."
                 : "Keine Themen für die gewählten Filter gefunden."}
             </p>
           </div>
