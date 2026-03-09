@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import type { TopicWithProject } from "@/app/topics/page";
 import type { TopicType, TopicStatus, PriorityLevel } from "@/lib/types/database";
 
@@ -69,6 +70,7 @@ interface Props {
 }
 
 export function TopicFilters({ topics, projects }: Props) {
+  const router = useRouter();
   const [filterProject, setFilterProject] = useState<string>("all");
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterType, setFilterType] = useState<string>("all");
@@ -197,7 +199,8 @@ export function TopicFilters({ topics, projects }: Props) {
         {filtered.map((topic) => (
           <div
             key={topic.id}
-            className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+            onClick={() => router.push(`/topics/${topic.id}`)}
+            className="cursor-pointer rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:shadow-md hover:border-indigo-200"
           >
             {/* Obere Zeile: Typ-Icon, Titel, Badges */}
             <div className="mb-2 flex items-start justify-between gap-4">

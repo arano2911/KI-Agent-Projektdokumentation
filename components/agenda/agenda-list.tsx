@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import { useRouter } from "next/navigation";
 import type { AgendaItem } from "@/app/agenda/page";
 
 // ──── Style Mappings ────
@@ -36,11 +37,14 @@ interface Props {
 }
 
 export function AgendaList({ items, fallbackTopics }: Props) {
+  const router = useRouter();
+
   // Gruppiert nach Projekt
   const grouped = useMemo(() => {
     const map = new Map<string, { meeting: string | null; items: AgendaItem[] }>();
 
     const source = items.length > 0 ? items : fallbackTopics.map((t) => ({
+      topic_id: t.id,
       thema: t.title,
       beschreibung: t.description,
       typ: t.type,
@@ -125,7 +129,11 @@ export function AgendaList({ items, fallbackTopics }: Props) {
             {group.items.map((item, idx) => {
               const prio = priorityStyles[item.prioritaet] ?? priorityStyles.Niedrig;
               return (
-                <div key={idx} className="flex items-start gap-4 px-5 py-4 hover:bg-slate-50 transition-colors">
+                <div
+                  key={idx}
+                  onClick={() => router.push(`/topics/${item.topic_id}`)}
+                  className="flex cursor-pointer items-start gap-4 px-5 py-4 transition-colors hover:bg-slate-50 hover:border-indigo-200"
+                >
                   {/* Nummer */}
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[11px] font-bold text-slate-500">
                     {idx + 1}

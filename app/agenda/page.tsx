@@ -5,6 +5,7 @@ import { AgendaList } from "@/components/agenda/agenda-list";
 export const revalidate = 0;
 
 export interface AgendaItem {
+  topic_id: string;
   thema: string;
   beschreibung: string | null;
   typ: string;

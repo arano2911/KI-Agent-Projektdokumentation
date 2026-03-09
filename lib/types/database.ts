@@ -101,6 +101,15 @@ export interface ProjectDashboard {
   letzte_aktivitaet: string | null;
 }
 
+// Erweiterte Types für Detail-Seiten
+export interface TopicWithProject extends Topic {
+  projects: { id: string; name: string } | null;
+}
+
+export interface TaskWithProject extends Task {
+  projects: { name: string } | null;
+}
+
 // Supabase Database Type (für typisierte Queries)
 export interface Database {
   public: {
@@ -201,6 +210,7 @@ export interface Database {
       };
       v_meeting_agenda: {
         Row: {
+          topic_id: string;
           thema: string;
           beschreibung: string | null;
           typ: TopicType;
