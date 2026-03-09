@@ -85,8 +85,7 @@ export function ChatWindow() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: "assistant",
-      content:
-        "Hallo! Ich bin Misty. Wie kann ich dir helfen?\n\nDu kannst mich z.B. fragen:\n- \"Was steht heute an?\"\n- \"Erstell eine Aufgabe: Angebot schreiben bis Freitag\"\n- \"Was ist offen im Projekt X?\"\n- \"Erinnere mich morgen an den Statusbericht\"",
+      content: "Hey — wie kann ich dir helfen?",
       timestamp: new Date(),
     },
   ]);
